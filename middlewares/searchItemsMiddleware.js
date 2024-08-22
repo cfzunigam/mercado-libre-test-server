@@ -8,17 +8,14 @@ const searchItemsMiddleware = async (req, res) => {
     }
 
     try {
-        // Realizar la consulta a la API de Mercado Libre
         const response = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?q=${query}`);
 
-        // Filtrar los datos relevantes que queremos devolver en nuestra API
         const author = {
             name: "Camila",
             lastname: "Zuniga"
         };
 
-        const categoryFilter = response.data.available_filters.find(filter => filter.name === "Categorías");
-
+        const categoryFilter = response.data.available_filters.find(filter => filter.id === "category");
         const items = response.data.results.map(item => ({
             id: item.id,
             title: item.title,
@@ -34,10 +31,9 @@ const searchItemsMiddleware = async (req, res) => {
 
         const responseFormat = {
             author,
-            category: ["Inicio",categoryFilter.values[0].name],
+            category: ["Inicio",categoryFilter ? categoryFilter.values[0].name : ""],
             items: items
         };
-        // Responder con los items filtrados
         res.json(responseFormat);
     } catch (error) {
         console.error(error);

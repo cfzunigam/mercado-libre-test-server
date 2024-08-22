@@ -4,7 +4,6 @@ const routes = require('./route');
 const app = express();
 const port = 8080;
 
-// Usar las rutas definidas en route.js
 app.use(routes);
 
 app.listen(port, () => {

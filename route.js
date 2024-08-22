@@ -4,7 +4,6 @@ const itemDetailMiddleware = require('./middlewares/itemDetailMiddleware');
 
 const router = express.Router();
 
-// Definir las rutas y asignar los middlewares correspondientes
 router.get('/api/items', searchItemsMiddleware);
 router.get('/api/items/:id', itemDetailMiddleware);
 

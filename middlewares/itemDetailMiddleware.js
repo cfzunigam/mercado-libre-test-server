@@ -8,24 +8,33 @@ const itemDetailMiddleware = async (req, res) => {
     }
 
     try {
-        // Realizar la consulta a la API de Mercado Libre para obtener los detalles de un item
         const response = await axios.get(`https://api.mercadolibre.com/items/${id}`);
-
-        // Filtrar los datos relevantes que queremos devolver en nuestra API
-        const itemDetails = {
+        const responseDescription = await axios.get(`https://api.mercadolibre.com/items/${id}/description`);
+        const author = {
+            name: "Camila",
+            lastname: "Zuniga"
+        };
+        const item = {
             id: response.data.id,
             title: response.data.title,
-            price: response.data.price,
-            currency_id: response.data.currency_id,
+            price: {
+                currency: response.data.currency_id,
+                amount:  Number.isInteger(response.data.price) ? parseInt(response.data.price) : parseInt((response.data.price).toString().split(".")[0]),
+                decimals: Number.isInteger(response.data.price) ? 0 : parseInt((response.data.price).toString().split(".")[1]),
+            },
+            picture: response.data.pictures[0].url,
             condition: response.data.condition,
-            permalink: response.data.permalink,
-            pictures: response.data.pictures.map(pic => pic.url),
+            free_shipping: response.data.shipping.free_shipping,
             sold_quantity: response.data.sold_quantity,
-            description: response.data.descriptions ? response.data.descriptions : ''
+            description: responseDescription.data.plain_text
         };
 
-        // Responder con los detalles del item
-        res.json(itemDetails);
+        const responseFormat = {
+            author,
+            item
+        };
+
+        res.json(responseFormat);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al consultar la API de Mercado Libre' });

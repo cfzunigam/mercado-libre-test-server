@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "c79116e8-1a6d-4e9b-aafc-438d7df6f791",
+		"name": "mercado-libre-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37907065"
+	},
+	"item": [
+		{
+			"name": "Request OK search items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/items?q=pintura",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"items"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "pintura"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request OK detail product",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

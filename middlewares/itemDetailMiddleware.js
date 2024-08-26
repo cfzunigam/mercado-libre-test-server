@@ -23,7 +23,7 @@ const itemDetailMiddleware = async (req, res) => {
                 decimals: Number.isInteger(response.data.price) ? 0 : parseInt((response.data.price).toString().split(".")[1]),
             },
             picture: response.data.pictures[0].url,
-            condition: response.data.condition,
+            condition: response.data.condition === "new" ? "Nuevo" : "Usado",
             free_shipping: response.data.shipping.free_shipping,
             sold_quantity: response.data.sold_quantity,
             description: responseDescription.data.plain_text

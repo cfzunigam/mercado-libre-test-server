@@ -16,6 +16,7 @@ const searchItemsMiddleware = async (req, res) => {
         };
 
         const categoryFilter = response.data.available_filters.find(filter => filter.id === "category");
+          
         const items = response.data.results.map(item => ({
             id: item.id,
             title: item.title,
@@ -31,7 +32,7 @@ const searchItemsMiddleware = async (req, res) => {
 
         const responseFormat = {
             author,
-            category: ["Inicio",categoryFilter ? categoryFilter.values[0].name : ""],
+            category: [categoryFilter ? categoryFilter.values[0].name : ""],
             items: items
         };
         res.json(responseFormat);
